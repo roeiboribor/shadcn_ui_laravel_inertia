@@ -1,4 +1,5 @@
 import { Link, Head } from "@inertiajs/react";
+import { useEffect, useState } from "react";
 
 import {
     AlertDialog,
@@ -12,11 +13,36 @@ import {
     AlertDialogTrigger,
 } from "@/Components/shadcn/ui/alert-dialog";
 
+import {
+    Command,
+    CommandDialog,
+    CommandEmpty,
+    CommandGroup,
+    CommandInput,
+    CommandItem,
+    CommandList,
+    CommandSeparator,
+    CommandShortcut,
+} from "@/components/shadcn/ui/command";
+
 export default function Welcome({ auth, laravelVersion, phpVersion }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log("Submit Form");
     };
+
+    const [open, setOpen] = useState(false);
+
+    useEffect(() => {
+        const down = (e) => {
+            if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
+                e.preventDefault();
+                setOpen((open) => !open);
+            }
+        };
+        document.addEventListener("keydown", down);
+        return () => document.removeEventListener("keydown", down);
+    }, []);
     return (
         <>
             <Head title="Welcome" />
@@ -49,7 +75,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                 </div>
 
                 <div className="max-w-7xl mx-auto p-6 lg:p-8">
-                    <AlertDialog>
+                    {/* <AlertDialog>
                         <AlertDialogTrigger>Open</AlertDialogTrigger>
                         <AlertDialogContent>
                             <form onSubmit={handleSubmit}>
@@ -57,7 +83,28 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                                     <AlertDialogTitle>
                                         Add User
                                     </AlertDialogTitle>
-                                    <AlertDialogDescription></AlertDialogDescription>
+                                    <AlertDialogDescription>
+                                        Lorem ipsum dolor sit amet consectetur
+                                        adipisicing elit. Animi officia quia
+                                        nobis voluptate quam, inventore quae
+                                        magnam, doloremque possimus et soluta
+                                        aut ea nesciunt minima dicta fuga odio
+                                        reprehenderit totam, rem libero quaerat
+                                        maiores cumque mollitia facilis? Sunt,
+                                        quod architecto impedit accusamus
+                                        facilis nostrum aliquam similique
+                                        dolore. Possimus voluptas nisi, minus
+                                        illo quisquam ab tempore sit voluptates
+                                        commodi? Dicta iste deserunt,
+                                        exercitationem atque at blanditiis
+                                        magnam, quae optio illum saepe velit hic
+                                        quis, quia fugit maiores cumque? Rerum
+                                        corrupti ea nulla distinctio laudantium
+                                        voluptatem? Aperiam pariatur dignissimos
+                                        eveniet et voluptatum, provident soluta
+                                        quod ab voluptatibus ex nihil, mollitia,
+                                        laborum nemo.
+                                    </AlertDialogDescription>
                                 </AlertDialogHeader>
                                 <AlertDialogFooter>
                                     <AlertDialogCancel type="button">
@@ -69,7 +116,25 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                                 </AlertDialogFooter>
                             </form>
                         </AlertDialogContent>
-                    </AlertDialog>
+                    </AlertDialog> */}
+
+                    <Command>
+                        <CommandInput placeholder="Type a command or search..." />
+                        <CommandList>
+                            <CommandEmpty>No results found.</CommandEmpty>
+                            <CommandGroup heading="Suggestions">
+                                <CommandItem>Calendar</CommandItem>
+                                <CommandItem>Search Emoji</CommandItem>
+                                <CommandItem>Calculator</CommandItem>
+                            </CommandGroup>
+                            <CommandSeparator />
+                            <CommandGroup heading="Settings">
+                                <CommandItem>Profile</CommandItem>
+                                <CommandItem>Billing</CommandItem>
+                                <CommandItem>Settings</CommandItem>
+                            </CommandGroup>
+                        </CommandList>
+                    </Command>
                 </div>
             </div>
         </>
